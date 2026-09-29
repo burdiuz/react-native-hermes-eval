@@ -12,13 +12,27 @@ npm install @actualwave/react-native-hermes-eval
 
 ## Usage
 
+```js
+import { evaluateJavaScript } from '@actualwave/react-native-hermes-eval';
+
+const result = evaluateJavaScript('1 + 2 + 3', 'my-source.js');
+// result === 6
+```
+
+`evaluateJavaScript(source, sourceURL?)` compiles and runs a JS source string
+directly on Hermes via `jsi::Runtime::evaluateJavaScript()` — the same
+primitive React Native itself uses to load the JS bundle. This bypasses
+Hermes' restriction on JS-level `eval()`/`new Function()`. `sourceURL`
+(default `"user_code.js"`) is used for stack traces and source maps.
+
+The underlying native bridge is installed lazily on first use. To install it
+explicitly (e.g. ahead of time, or to check whether installation succeeded),
+call `installHermesEval(): boolean`:
 
 ```js
-import { multiply } from '@actualwave/react-native-hermes-eval';
+import { installHermesEval } from '@actualwave/react-native-hermes-eval';
 
-// ...
-
-const result = multiply(3, 7);
+const ok = installHermesEval();
 ```
 
 

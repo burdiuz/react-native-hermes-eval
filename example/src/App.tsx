@@ -1,12 +1,12 @@
 import { Text, View, StyleSheet } from 'react-native';
-import { multiply } from '@actualwave/react-native-hermes-eval';
+import { evaluateJavaScript } from '@actualwave/react-native-hermes-eval';
 
-const result = multiply(3, 7);
+const result = evaluateJavaScript('1 + 2 + 3 + 4', 'example.js');
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text>Result: {String(result)}</Text>
     </View>
   );
 }
